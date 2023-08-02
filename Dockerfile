@@ -7,8 +7,14 @@ ENV CUDNN_VERSION=8.2.0.53
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     gnupg2 \
     software-properties-common \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install wget
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Add the NVIDIA CUDA repository
