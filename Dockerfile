@@ -18,7 +18,7 @@ RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 COPY . /app
 
 # Install any Python dependencies (if needed)
-# RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Execute the unittest command inside the container
 CMD ["python", "-m", "unittest", "discover", "-s", "tests"]
