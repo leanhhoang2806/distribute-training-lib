@@ -1,10 +1,6 @@
 # Use the Ubuntu 20.04 base image
-FROM ubuntu:20.04
-
-RUN apt-get update \
-    && apt-get install -y nvidia-container-toolkit-base
-
-RUN nvidia-ctk --version
+FROM nvidia/cuda:11.6.2-base-ubuntu20.04
+RUN nvidia-smi
 # Set the working directory inside the container
 WORKDIR /app
 
