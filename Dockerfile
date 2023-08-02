@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     build-essential
 RUN rm -rf /var/lib/apt/lists/*
+# Install CUDA Toolkit and other required packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cuda-toolkit-11-6 \
+    && rm -rf /var/lib/apt/lists/*
 RUN nvcc --version
 
 # Set up Python environment and aliases
