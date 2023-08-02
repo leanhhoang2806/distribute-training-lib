@@ -14,6 +14,8 @@ RUN rm -rf /var/lib/apt/lists/*
 # Set up Python environment and aliases
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+# Upgrade pip and setuptools
+RUN python -m pip install --upgrade pip setuptools
 
 # Copy the Python app files to the container's working directory
 COPY . /app
