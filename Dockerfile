@@ -13,8 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Import the NVIDIA CUDA repository GPG key manually
-RUN wget -qO - https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub | gpg --dearmor -o /etc/apt/trusted.gpg.d/cuda-archive-keyring.gpg
+# Add the NVIDIA CUDA repository GPG key manually
+RUN wget -qO /tmp/7fa2af80.pub https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+RUN apt-key add /tmp/7fa2af80.pub
 
 # Add the NVIDIA CUDA repository
 RUN sh -c 'echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list'
