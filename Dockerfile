@@ -1,5 +1,5 @@
 # Use the Ubuntu 20.04 base image
-FROM nvidia/cuda:11.2.1-base-ubuntu20.04 
+FROM nvidia/cuda:11.2.0-runtime-ubuntu20.04
 
 RUN apt-key del 7fa2af80
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
