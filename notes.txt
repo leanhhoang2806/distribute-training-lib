@@ -1,8 +1,4 @@
-### Running test code:
-python -m unittest discover -s tests
 
-### start virtuale env
-source distributed_library/bin/activate
 
-### install requirements
-pip install -r requirements.txt
+### Run the Docker command
+sudo docker stop distributed-lib | true && sudo docker rm distributed-lib | true && sudo docker rmi --force distributed-lib && sudo docker build -t distributed-lib . && sudo docker run --gpus all --name distributed-lib  distributed-lib
