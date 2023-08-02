@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcudnn8-dev=${CUDNN_VERSION}-1+cuda${CUDA_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
+RUN  wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
+RUN sudo dpkg -i cuda-keyring_1.0-1_all.deb
 # Set environment variables for CUDA
 ENV PATH="/usr/local/cuda-${CUDA_VERSION}/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/usr/local/cuda-${CUDA_VERSION}/lib64:${LD_LIBRARY_PATH}"
