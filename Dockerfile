@@ -1,8 +1,8 @@
 # Use the Ubuntu 20.04 base image
 FROM ubuntu:20.04
 
-RUN sudo apt-get update \
-    && sudo apt-get install -y nvidia-container-toolkit-base
+RUN apt-get update \
+    && apt-get install -y nvidia-container-toolkit-base
 
 RUN nvidia-ctk --version
 # Set the working directory inside the container
