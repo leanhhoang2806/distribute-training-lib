@@ -8,8 +8,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.8 \
     python3-pip \
-    build-essential \  # Add the build-essential package for building Python packages \
-    && rm -rf /var/lib/apt/lists/*
+    build-essential
+RUN rm -rf /var/lib/apt/lists/*
 
 # Set up Python environment and aliases
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
