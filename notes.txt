@@ -1,0 +1,8 @@
+### Running test code:
+python -m unittest discover -s tests
+
+### start virtuale env
+source distributed_library/bin/activate
+
+### install requirements
+pip install -r requirements.txt
