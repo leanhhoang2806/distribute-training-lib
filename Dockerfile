@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     build-essential
 RUN rm -rf /var/lib/apt/lists/*
+RUN nvcc --version
 
 # Set up Python environment and aliases
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
