@@ -23,21 +23,14 @@ def matrix_multiplication(matrix1, matrix2):
     return result
 
 
-@cuda.jit(target='cuda', device=True)
-def matrix_multiplication_kernel(matrix1, matrix2, rows1, cols1, cols2):
-    i, j = cuda.grid(2)
-    if i < rows1 and j < cols2:
-        tmp = 0.0
-        for k in range(cols1):
-            tmp += matrix1[i, k] * matrix2[k, j]
-        return tmp
-    return 0.0
-
 @cuda.jit
 def matrix_multiplication(matrix1, matrix2, result):
     i, j = cuda.grid(2)
     if i < result.shape[0] and j < result.shape[1]:
-        result[i, j] = matrix_multiplication_kernel(matrix1, matrix2, result.shape[0], matrix1.shape[1], matrix2.shape[1])
+        tmp = 0.0
+        for k in range(matrix1.shape[1]):
+            tmp += matrix1[i, k] * matrix2[k, j]
+        result[i, j] = tmp
 
 def matrix_multiplication_cuda(matrix1, matrix2):
     if count_gpus() == 0:
@@ -57,7 +50,7 @@ def matrix_multiplication_cuda(matrix1, matrix2):
 
     # Define block and grid sizes for CUDA kernel
     block_size = (32, 32)
-    grid_size = ((cols2 - 1) // block_size[0] + 1, (rows1 - 1) // block_size[1] + 1)
+    grid_size = ((rows1 - 1) // block_size[0] + 1, (cols2 - 1) // block_size[1] + 1)
 
     # Launch the CUDA kernel
     matrix_multiplication[grid_size, block_size](matrix1_gpu, matrix2_gpu, result_gpu)
