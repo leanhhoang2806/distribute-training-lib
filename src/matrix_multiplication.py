@@ -7,16 +7,12 @@ from pycuda.compiler import SourceModule
 import os
 
 
+
 def matrix_multiplication_cuda(A, B):
     if count_gpus() == 0:
         raise EnvironmentError("No GPUs found on your computer.")
-    if A.ndim != 1 or B.ndim != 1:
-        raise ValueError("Both A and B must be 1D arrays.")
-
-    rows_A, cols_A = A.shape[0], 1
-    rows_B, cols_B = B.shape[0], 1
-    print(f"rows_A: {rows_A}, cols_A: {cols_A}")
-    print(f"rows_B: {rows_B}, cols_B: {cols_B}")
+    rows_A, cols_A = A.shape
+    rows_B, cols_B = B.shape
 
     if cols_A != rows_B:
         raise ValueError("Matrix dimensions are not compatible for multiplication.")
@@ -31,18 +27,18 @@ def matrix_multiplication_cuda(A, B):
     cuda.memcpy_htod(B_gpu, B)
 
     # Define block and grid sizes
-    block_size = (16, 1, 1)
+    block_size = (16, 16, 1)
     grid_size = ((cols_B - 1) // block_size[0] + 1, (rows_A - 1) // block_size[1] + 1)
     print("Block size is " + str(block_size))
     print("Grid size is " + str(grid_size))
 
     # Compile CUDA kernel
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    cuda_file = os.path.join(current_dir, "matrix_mult_1d.cu")
+    cuda_file = os.path.join(current_dir, "matrix_mult.cu")
     with open(cuda_file, 'r') as f:
         kernel_code = f.read()
     mod = SourceModule(kernel_code)
-    matrix_multiply = mod.get_function("matrix_multiply_1d")
+    matrix_multiply = mod.get_function("matrix_multiply")
 
     # Call the CUDA kernel
     matrix_multiply(A_gpu, B_gpu, C_gpu, np.int32(rows_A), np.int32(cols_A), np.int32(cols_B), block=block_size, grid=grid_size)
