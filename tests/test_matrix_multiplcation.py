@@ -12,13 +12,15 @@ class TestMatrixMultiplication(unittest.TestCase):
         # Stop tracemalloc after each test
         tracemalloc.stop()
     def test_matrix_multiplication(self):
-        A = np.array([1.0, 2.0, 3.0], dtype=np.float32)
-        B = np.array([4.0, 5.0, 6.0], dtype=np.float32)
+        A = np.array([1, 2, 3, 4], dtype=np.float32)
+        B = np.array([5, 6, 7, 8], dtype=np.float32)
 
-        expected_result = np.array([4.0, 10.0, 18.0], dtype=np.float32)
+        A = A.reshape(1, -1)  # Reshape A to a row vector (1 x 4)
+        B = B.reshape(-1, 1)  # Reshape B to a column vector (4 x 1)
 
         result = matrix_multiplication_cuda(A, B)
+        print(result)
 
-        assert np.array_equal(result, expected_result), f"Test failed: Expected {expected_result}, Got {result}"
+        assert np.array_equal(result, np.array([[70]])), f"Test failed: Expected {np.array([[70]])}, Got {result}"
 
         print("Test passed.")
