@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import tracemalloc
-from src.matrix_multiplication import matrix_multiplication_cuda
+from src.matrix_multiplication import matrix_multiplication_cuda, matrix_multiplication_using_numpy
 
 class TestMatrixMultiplication(unittest.TestCase):
     def setUp(self):
@@ -12,15 +12,16 @@ class TestMatrixMultiplication(unittest.TestCase):
         # Stop tracemalloc after each test
         tracemalloc.stop()
     def test_matrix_multiplication(self):
-        A = np.array([1, 2, 3, 4], dtype=np.float32)
-        B = np.array([5, 6, 7, 8], dtype=np.float32)
+        # Test case: 2x4 matrix multiplication
+        matrix1 = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], dtype=np.float32)
+        matrix2 = np.array([[8, 7], [6, 5], [4, 3], [2, 1]], dtype=np.float32)
 
-        A = A.reshape(1, -1)  # Reshape A to a row vector (1 x 4)
-        B = B.reshape(-1, 1)  # Reshape B to a column vector (4 x 1)
+        # Perform matrix multiplication using NumPy
+        result_numpy = matrix_multiplication_using_numpy(matrix1, matrix2)
 
-        result = matrix_multiplication_cuda(A, B)
-        print(result)
+        # Perform matrix multiplication using CUDA
+        result_cuda = matrix_multiplication_cuda(matrix1, matrix2)
 
-        assert np.array_equal(result, np.array([[70]])), f"Test failed: Expected {np.array([[70]])}, Got {result}"
-
+        # Check if the results from NumPy and CUDA are the same
+        assert np.allclose(result_numpy, result_cuda)
         print("Test passed.")
