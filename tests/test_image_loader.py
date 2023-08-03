@@ -6,7 +6,7 @@ from src.load_image import load_images_from_folder
 
 class TestImageLoading(unittest.TestCase):
     def test_load_images_from_folder(self):
-        folder_path = "../data-source/"
+        folder_path = "/app/data-source/"
         loaded_images = load_images_from_folder(folder_path)
         
         # Check that the loaded_images list is not empty

@@ -13,7 +13,7 @@ def load_images_from_folder(folder_path):
     return image_list
 
 # Provide the folder path containing your images
-folder_path = "../data-source/"
+folder_path = "/app/data-source/"
 loaded_images = load_images_from_folder(folder_path)
 
 # Now, loaded_images is a list of NumPy arrays, each representing an image from the folder
