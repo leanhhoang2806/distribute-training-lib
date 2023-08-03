@@ -7,6 +7,8 @@ from pycuda.compiler import SourceModule
 import os
 
 def matrix_multiplication_cuda(A, B):
+    if count_gpus() == 0:
+        raise EnvironmentError("No GPUs found on your computer.")
     rows_A, cols_A = A.shape
     rows_B, cols_B = B.shape
 
