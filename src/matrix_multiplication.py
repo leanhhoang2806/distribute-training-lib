@@ -6,6 +6,8 @@ import pycuda.autoinit
 from pycuda.compiler import SourceModule
 import os
 
+
+
 def matrix_multiplication_cuda(A, B):
     if count_gpus() == 0:
         raise EnvironmentError("No GPUs found on your computer.")
