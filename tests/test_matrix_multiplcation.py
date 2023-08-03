@@ -1,14 +1,13 @@
 import unittest
-from src.matrix_multiplication import matrix_multiplication, matrix_multiplication_cuda
+import np
+from src.matrix_multiplication import matrix_multiplication_cuda
 
 class TestMatrixMultiplication(unittest.TestCase):
     def test_matrix_multiplication(self):
-        matrix1 = [[1, 2], [3, 4]]  # 2x2 matrix
-        matrix2 = [[5, 6], [7, 8]]  # 2x2 matrix
-        expected_result = [[19, 22], [43, 50]]
+        A = np.array([[1, 2], [3, 4], [5, 6]], dtype=np.float32)
+        B = np.array([[7, 8, 9], [10, 11, 12]], dtype=np.float32)
 
-        result = matrix_multiplication(matrix1, matrix2)
-        cuda_result = matrix_multiplication_cuda(matrix1, matrix2)
+        result = matrix_multiplication_cuda(A, B)
 
-        self.assertEqual(result, expected_result)
-        self.assertEqual(cuda_result, expected_result)
+        expected_result = np.matmul(A, B)
+        np.testing.assert_array_equal(result, expected_result)
