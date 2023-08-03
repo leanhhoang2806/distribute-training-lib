@@ -11,26 +11,22 @@ import os
 def matrix_multiplication_cuda(A, B):
     if count_gpus() == 0:
         raise EnvironmentError("No GPUs found on your computer.")
-    print(f"shape of A: {A.shape}")
-    print(f"shape of B: {B.shape}")
-    rows_A, cols_A = A.shape
-    rows_B, cols_B = B.shape
 
-    if cols_A != rows_B:
+    if A.shape[0] != B.shape[0]:
         raise ValueError("Matrix dimensions are not compatible for multiplication.")
 
     # Allocate GPU memory
     A_gpu = cuda.mem_alloc(A.nbytes)
     B_gpu = cuda.mem_alloc(B.nbytes)
-    C_gpu = cuda.mem_alloc((rows_A * np.dtype(np.float32).itemsize))
+    C_gpu = cuda.mem_alloc((A.shape[0] * np.dtype(np.float32).itemsize))
 
     # Transfer data to GPU
     cuda.memcpy_htod(A_gpu, A)
     cuda.memcpy_htod(B_gpu, B)
 
     # Define block and grid sizes
-    block_size = (16, 16, 1)
-    grid_size = ((cols_B - 1) // block_size[0] + 1, (rows_A - 1) // block_size[1] + 1)
+    block_size = (256, 1, 1)
+    grid_size = ((A.size - 1) // block_size[0] + 1, 1)
     print("Block size is " + str(block_size))
     print("Grid size is " + str(grid_size))
 
