@@ -7,8 +7,9 @@ def process_image_engine(folder_path):
     caculation_results = []
     for image_np_array in loaded_images:
         # generate a random np array with the same size as the image
-        random_array = np.random.rand(image_np_array.shape[0])
-        print(f"image_np_array: {image_np_array}")
+        random_array = np.random.rand(len(image_np_array))
+        print(f"image_np_array: {image_np_array.shape}")
+        print(f"random_array: {random_array.shape}")
         caculation_results.append(matrix_multiplication_cuda(image_np_array, random_array))
     print("caculation_results: ", caculation_results)
     return caculation_results
