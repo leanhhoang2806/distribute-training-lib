@@ -11,6 +11,8 @@ import os
 def matrix_multiplication_cuda(A, B):
     if count_gpus() == 0:
         raise EnvironmentError("No GPUs found on your computer.")
+    print(f"shape of A: {A.shape}")
+    print(f"shape of B: {B.shape}")
     rows_A, cols_A = A.shape
     rows_B, cols_B = B.shape
 
@@ -20,7 +22,7 @@ def matrix_multiplication_cuda(A, B):
     # Allocate GPU memory
     A_gpu = cuda.mem_alloc(A.nbytes)
     B_gpu = cuda.mem_alloc(B.nbytes)
-    C_gpu = cuda.mem_alloc((rows_A * cols_B * np.dtype(np.float32).itemsize))
+    C_gpu = cuda.mem_alloc((rows_A * np.dtype(np.float32).itemsize))
 
     # Transfer data to GPU
     cuda.memcpy_htod(A_gpu, A)
