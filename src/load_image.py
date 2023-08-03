@@ -11,6 +11,5 @@ def load_images_from_folder(folder_path):
             image_np = np.array(image_pil)
             # flatten the image
             image_np = image_np.reshape(-1)
-            
             image_list.append(image_np)
-    return image_list
+    return np.vstack(image_list)
