@@ -2,7 +2,7 @@ import unittest
 import os
 import numpy as np
 from PIL import Image
-from ..src.load_image import load_images_from_folder
+from src.load_image import load_images_from_folder
 
 class TestImageLoading(unittest.TestCase):
     def test_load_images_from_folder(self):
