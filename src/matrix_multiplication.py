@@ -31,7 +31,9 @@ def matrix_multiplication_cuda(A, B):
     # Compile CUDA kernel
     current_dir = os.path.dirname(os.path.abspath(__file__))
     cuda_file = os.path.join(current_dir, "matrix_mult.cu")
-    mod = SourceModule(open(cuda_file).read())
+    with open(cuda_file, 'r') as f:
+        kernel_code = f.read()
+    mod = SourceModule(kernel_code)
     matrix_multiply = mod.get_function("matrix_multiply")
 
     # Call the CUDA kernel
