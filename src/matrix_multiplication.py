@@ -7,8 +7,10 @@ from pycuda.compiler import SourceModule
 import os
 
 def matrix_multiplication_cuda(A, B):
-    rows_A, cols_A = A.shape
-    rows_B, cols_B = B.shape
+    rows_A = len(A)
+    cols_A = len(A[0])
+    rows_B = len(B)
+    cols_B = len(B[0])
 
     if cols_A != rows_B:
         raise ValueError("Matrix dimensions are not compatible for multiplication.")
