@@ -11,6 +11,9 @@ def matrix_multiplication_cuda(A, B):
     rows_A, cols_A = A.shape
     rows_B, cols_B = B.shape
 
+    print("Matrix A: row {} x col {}".format(rows_A, cols_A))
+    print("Matrix B: row {} x col {}".format(rows_B, cols_B))
+
     if cols_A != rows_B:
         raise ValueError("Matrix dimensions are not compatible for multiplication.")
 
