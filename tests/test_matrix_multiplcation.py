@@ -1,5 +1,5 @@
 import unittest
-import np
+import numpy as np
 from src.matrix_multiplication import matrix_multiplication_cuda
 
 class TestMatrixMultiplication(unittest.TestCase):
